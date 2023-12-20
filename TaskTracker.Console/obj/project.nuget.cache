@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "fPQg+S41iXzkEUek9I/hiZvCaIwRX9OWtCWQW7dVfGD/7XRch8bb2xcdOPziB21MtzT1qSNrOXcYp58jtHRL9w==",
+  "success": true,
+  "projectFilePath": "/Users/agos/TaskTraker/TaskTraker/TaskTracker.Console/TaskTracker.Console.csproj",
+  "expectedPackageFiles": [
+    "/Users/agos/.nuget/packages/microsoft.data.sqlite/6.0.0/microsoft.data.sqlite.6.0.0.nupkg.sha512",
+    "/Users/agos/.nuget/packages/microsoft.data.sqlite.core/6.0.0/microsoft.data.sqlite.core.6.0.0.nupkg.sha512",
+    "/Users/agos/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.0.6/sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512",
+    "/Users/agos/.nuget/packages/sqlitepclraw.core/2.0.6/sqlitepclraw.core.2.0.6.nupkg.sha512",
+    "/Users/agos/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.0.6/sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",
+    "/Users/agos/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.0.6/sqlitepclraw.provider.e_sqlite3.2.0.6.nupkg.sha512",
+    "/Users/agos/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512"
+  ],
+  "logs": []
+}

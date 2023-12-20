@@ -1,0 +1,86 @@
+using Microsoft.Data.Sqlite;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+public class SqliteDataAccess
+{
+    private const string ConnectionString = "Data Source=tasktracker.db";
+
+    public async Task<List<TaskItem>> GetAllTasksAsync()
+    {
+        var tasks = new List<TaskItem>();
+        using var connection = new SqliteConnection(ConnectionString);
+        await connection.OpenAsync();
+
+        using var command = new SqliteCommand("SELECT Id, Description, IsComplete FROM Tasks", connection);
+        using var reader = await command.ExecuteReaderAsync();
+
+        while (await reader.ReadAsync())
+        {
+            tasks.Add(new TaskItem
+            {
+                Id = reader.GetInt32(0),
+                Description = reader.GetString(1),
+                IsComplete = reader.GetBoolean(2)
+            });
+        }
+
+        return tasks;
+    }
+
+    public async Task AddTaskAsync(TaskItem task)
+    {
+        using var connection = new SqliteConnection(ConnectionString);
+        await connection.OpenAsync();
+
+        using var command = new SqliteCommand("INSERT INTO Tasks (Description, IsComplete) VALUES (@Description, @IsComplete)", connection);
+        command.Parameters.AddWithValue("@Description", task.Description);
+        command.Parameters.AddWithValue("@IsComplete", task.IsComplete);
+        await command.ExecuteNonQueryAsync();
+    }
+    public async Task EditTaskAsync(int taskId, string newDescription)
+    {
+    using var connection = new SqliteConnection(ConnectionString);
+    await connection.OpenAsync();
+
+    using var command = new SqliteCommand("UPDATE Tasks SET Description = @NewDescription WHERE Id = @Id", connection);
+    command.Parameters.AddWithValue("@Id", taskId);
+    command.Parameters.AddWithValue("@NewDescription", newDescription);
+    int rowsAffected = await command.ExecuteNonQueryAsync();
+
+    if (rowsAffected == 0)
+    {
+        throw new InvalidOperationException("Tarefa não encontrada.");
+    }
+    }
+
+
+    public async Task RemoveTaskAsync(int taskId)
+    {
+        using var connection = new SqliteConnection(ConnectionString);
+        await connection.OpenAsync();
+
+        using var command = new SqliteCommand("DELETE FROM Tasks WHERE Id = @Id", connection);
+        command.Parameters.AddWithValue("@Id", taskId);
+        await command.ExecuteNonQueryAsync();
+    }
+
+    
+
+    public async Task CompleteTaskAsync(int taskId)
+    {
+        using var connection = new SqliteConnection(ConnectionString);
+        await connection.OpenAsync();
+
+        using var command = new SqliteCommand("UPDATE Tasks SET IsComplete = TRUE WHERE Id = @Id", connection);
+        command.Parameters.AddWithValue("@Id", taskId);
+        await command.ExecuteNonQueryAsync();
+    }
+}
+
+public class TaskItem
+{
+    public int Id { get; set; }
+    public string Description { get; set; }
+    public bool IsComplete { get; set; }
+}
